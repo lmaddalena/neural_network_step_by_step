@@ -115,15 +115,15 @@ def backpropagation(Y, Yhat, cache, parameters):
 
     grads = {}
 
-    A = Yhat
-    dA = - (np.divide(Y, A) - np.divide(1 - Y, 1 - A)) # derivative of cost with respect to Yhat
-
     # output layer
     l = L
+    A = Yhat
     Z = cache["Z" + str(l)]          # get Z[l] from cache
     W = parameters["W" + str(l)]     # get W[l] from parameters
 
-    dZ = dA * dsigmoid(Z)
+    #dA = - (np.divide(Y, A) - np.divide(1 - Y, 1 - A)) # derivative of cost with respect to Yhat
+    #dZ = dA * dsigmoid(Z) or else dZ = A - Y
+    dZ = A - Y
     dW = (1 / m) * np.dot(dZ, cache["A" + str(l-1)].T)
     db = (1 / m) * np.sum(dZ, axis = 1, keepdims = True)
     dA = np.dot(W.T, dZ) 
